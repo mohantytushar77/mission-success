@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Success Coaching Institute — Balasore</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F9F6; --bg-alt: #FFFFFF; --bg-card: #FFFFFF;
+  --text: #1E3A5F; --text-soft: #5A7A9A;
+  --border: #E2EDE8; --primary: #00B9B3; --secondary: #0288D1;
+  --accent: #FF7A5A; --mint: #A8E6CF; --gold: #FFCB6B;
+  --shadow: 0 8px 32px rgba(0,100,100,0.08);
+  --nav-bg: rgba(244,249,246,0.92);
+  --footer-bg: #1E3A5F;
+}
+[data-theme="dark"] {
+  --bg: #0F1A2E; --bg-alt: #162034; --bg-card: #1B2A42;
+  --text: #E8F0FE; --text-soft: #94A3B8;
+  --border: #2A3A52; --primary: #00D4CC; --secondary: #0288D1;
+  --accent: #FF8A65; --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --nav-bg: rgba(15,26,46,0.92); --footer-bg: #0A1220;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  background: var(--bg); color: var(--text);
+  transition: background 0.5s, color 0.5s;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+
+/* Animations */
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,185,179,0.4)} 70%{box-shadow:0 0 0 15px rgba(0,185,179,0)} }
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+@keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+
+.reveal { opacity: 0; transform: translateY(35px); transition: all 0.9s cubic-bezier(0.4,0,0.2,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.card-hover { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+.card-hover:hover { transform: translateY(-6px) scale(1.02); }
+.btn-glow { animation: pulse 2.5s infinite; }
+
+/* Nav */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--nav-bg); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; transition: all 0.4s;
+}
+.nav-brand { display: flex; align-items: center; gap: 12; }
+.nav-logo {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; color: #fff; font-family: 'Sora', sans-serif;
+}
+.nav-title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 16px; line-height: 1.1; }
+.nav-subtitle { font-size: 10px; color: var(--text-soft); letter-spacing: 1.5px; text-transform: uppercase; }
+.desktop-nav { display: flex; align-items: center; gap: 28px; }
+.nav-link {
+  color: var(--text-soft); text-decoration: none; font-size: 14px; font-weight: 500;
+  position: relative; cursor: pointer; transition: color 0.3s;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+  background: var(--primary); transition: width 0.3s;
+}
+.nav-link:hover { color: var(--primary); }
+.nav-link:hover::after { width: 100%; }
+.btn-theme {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 6px 14px; cursor: pointer; font-size: 14px; color: var(--text);
+  display: flex; align-items: center; gap: 6; font-family: 'DM Sans', sans-serif;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff; border: none; border-radius: 24px; padding: 10px 24px;
+  font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+.hamburger span { display: block; width: 24px; height: 2.5px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+.mobile-nav {
+  display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; z-index: 999;
+  background: var(--bg); padding: 24px; flex-direction: column; gap: 16px; animation: fadeIn 0.3s;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  color: var(--text); text-decoration: none; font-size: 20px; font-weight: 600;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 100px 24px 60px; position: relative; overflow: hidden;
+}
+.hero-orb1 {
+  position: absolute; top: -120px; right: -120px; width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,185,179,0.08), transparent 70%); pointer-events: none;
+}
+.hero-orb2 {
+  position: absolute; bottom: -80px; left: -80px; width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(2,136,209,0.06), transparent 70%); pointer-events: none;
+}
+.hero-shape1 {
+  position: absolute; top: 20%; left: 8%; width: 60px; height: 60px; border-radius: 16px;
+  background: rgba(0,185,179,0.06); border: 1px solid rgba(0,185,179,0.12);
+  transform: rotate(15deg); animation: float 6s ease-in-out infinite; pointer-events: none;
+}
+.hero-shape2 {
+  position: absolute; top: 35%; right: 10%; width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,122,90,0.06); border: 1px solid rgba(255,122,90,0.12);
+  animation: float 4s ease-in-out infinite 1s; pointer-events: none;
+}
+.hero-grid {
+  max-width: 1200px; width: 100%; display: flex; align-items: center; gap: 60;
+  animation: fadeUp 1s cubic-bezier(0.4,0,0.2,1);
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,185,179,0.08); border: 1px solid rgba(0,185,179,0.15);
+  border-radius: 30px; padding: 6px 16px; margin-bottom: 20px;
+  font-size: 13px; color: var(--primary); font-weight: 600;
+}
+.hero-badge .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; animation: dotPulse 2s infinite;
+}
+.hero-text { flex: 1; }
+.hero-text h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.12; margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--text), var(--primary));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-size: 200% 200%; animation: gradientShift 6s ease infinite;
+}
+.hero-text h1 span {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-text p { font-size: 18px; color: var(--text-soft); line-height: 1.7; max-width: 520px; margin-bottom: 32px; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-hero {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff; border: none; border-radius: 30px; padding: 16px 36px;
+  font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  display: flex; align-items: center; gap: 8;
+}
+.btn-hero-outline {
+  background: transparent; color: var(--primary); border: 2px solid rgba(0,185,179,0.25);
+  border-radius: 30px; padding: 16px 28px; font-weight: 600; font-size: 15px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 8;
+}
+.stats-row { display: flex; gap: 32px; margin-top: 40px; }
+.stat-num { font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800; color: var(--primary); }
+.stat-label { font-size: 13px; color: var(--text-soft); margin-top: 2px; }
+
+/* Hero Visual */
+.hero-visual { flex: 1; display: flex; justify-content: center; position: relative; }
+.hero-card {
+  width: 100%; max-width: 440px; aspect-ratio: 1; border-radius: 32px;
+  background: linear-gradient(135deg, rgba(0,185,179,0.08), rgba(2,136,209,0.05), rgba(255,122,90,0.03));
+  border: 1px solid rgba(0,185,179,0.12); position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-card-inner { text-align: center; padding: 40px; }
+.hero-card-icon { font-size: 80px; margin-bottom: 16px; animation: float 5s ease-in-out infinite; display: inline-block; }
+.hero-card-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.hero-card-sub { font-size: 14px; color: var(--text-soft); line-height: 1.6; }
+.hero-tags { display: flex; justify-content: center; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.hero-tag {
+  background: rgba(0,185,179,0.08); border: 1px solid rgba(0,185,179,0.15);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: var(--primary);
+}
+.hero-float {
+  position: absolute; background: var(--bg-card); border-radius: 16px; padding: 10px 16px;
+  box-shadow: var(--shadow); display: flex; align-items: center; gap: 8;
+  font-size: 13px; font-weight: 600; border: 1px solid var(--border); color: var(--text);
+}
+.hero-float-1 { top: 30px; right: 30px; animation: float 4s ease-in-out infinite 0.5s; }
+.hero-float-2 { bottom: 40px; left: 20px; animation: float 5s ease-in-out infinite 1.5s; }
+
+/* Trust Bar */
+.trust-bar {
+  padding: 28px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: var(--bg-alt); overflow: hidden;
+}
+.trust-track { display: flex; animation: marquee 30s linear infinite; width: fit-content; }
+.trust-item {
+  font-size: 13px; font-weight: 600; color: var(--text-soft); white-space: nowrap;
+  padding: 6px 16px; border-radius: 20px; background: rgba(0,185,179,0.04);
+  border: 1px solid var(--border); margin-right: 16px;
+}
+
+/* Motivation */
+.motivation {
+  padding: 40px 24px 20px; display: flex; justify-content: center;
+}
+.motivation-card {
+  max-width: 700px; width: 100%; text-align: center; padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(0,185,179,0.06), rgba(255,122,90,0.04));
+  border-radius: 20px; border: 1px solid rgba(0,185,179,0.12);
+}
+.motivation-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--primary); font-weight: 700; margin-bottom: 10px;
+}
+.motivation-text {
+  font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600;
+  color: var(--text); line-height: 1.6; font-style: italic; min-height: 50px;
+  transition: opacity 0.5s;
+}
+
+/* Section Titles */
+.section { padding: 80px 24px; }
+.section-alt { background: var(--bg-alt); }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-label {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 3px;
+  font-weight: 700; margin-bottom: 8px;
+}
+.section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; color: var(--text); }
+
+/* Features */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card {
+  background: var(--bg-card); border-radius: 20px; padding: 32px;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.feature-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0,185,179,0.08), rgba(2,136,209,0.05));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin-bottom: 18px;
+}
+.feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.feature-card p { font-size: 14px; color: var(--text-soft); line-height: 1.65; }
+
+/* Courses */
+.courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.course-card {
+  background: var(--bg-card); border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.course-bar { height: 6px; }
+.course-body { padding: 28px; }
+.course-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.course-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+.course-name { font-size: 17px; font-weight: 700; color: var(--text); }
+.course-seats { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; white-space: nowrap; }
+.course-info { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.course-time { font-size: 13px; color: var(--text-soft); display: flex; align-items: center; gap: 8px; }
+.course-fees { font-size: 15px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.progress-bar { margin-bottom: 16px; }
+.progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-soft); margin-bottom: 4px; }
+.progress-track { height: 6px; border-radius: 3px; background: var(--border); }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 1.5s ease; }
+.btn-enroll {
+  width: 100%; color: #fff; border: none; border-radius: 14px; padding: 12px 0;
+  font-weight: 700; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+
+/* Testimonials */
+.testimonial-main {
+  background: var(--bg-card); border-radius: 24px; padding: clamp(28px, 5vw, 48px);
+  border: 1px solid var(--border); box-shadow: var(--shadow); text-align: center;
+  margin-bottom: 40px; position: relative; overflow: hidden; min-height: 220px;
+}
+.testimonial-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+}
+.testimonial-quote { font-size: 20px; font-style: italic; color: var(--text); max-width: 600px; margin: 0 auto 20px; line-height: 1.7; font-weight: 500; }
+.testimonial-name { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700; color: var(--primary); }
+.testimonial-meta { font-size: 13px; color: var(--text-soft); margin-top: 4px; }
+.dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+.dot-btn {
+  height: 10px; border-radius: 5px; border: none; cursor: pointer; transition: all 0.3s;
+  background: rgba(0,185,179,0.2);
+}
+.dot-btn.active { width: 28px; background: var(--primary); }
+
+.toppers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.topper-card {
+  background: var(--bg-card); border-radius: 16px; padding: 20px; text-align: center;
+  border: 1.5px solid var(--border); cursor: pointer; transition: all 0.3s;
+}
+.topper-card.active { background: rgba(0,185,179,0.06); border-color: var(--primary); }
+.topper-avatar {
+  width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 10px;
+  background: linear-gradient(135deg, rgba(0,185,179,0.12), rgba(2,136,209,0.12));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; font-family: 'Sora', sans-serif; color: var(--primary);
+}
+.topper-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.topper-exam { font-size: 11px; color: var(--text-soft); }
+.topper-rank { font-size: 11px; font-weight: 700; color: var(--accent); margin-top: 4px; }
+
+/* Achievements */
+.achieve-section {
+  padding: 60px 24px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff;
+}
+.achieve-section h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 40px;
+  text-align: center; color: #fff;
+}
+.achieve-grid { display: flex; justify-content: center; gap: clamp(24px, 5vw, 60px); flex-wrap: wrap; }
+.achieve-item { text-align: center; }
+.achieve-icon { font-size: 32px; margin-bottom: 8px; }
+.achieve-num { font-family: 'Sora', sans-serif; font-size: 36px; font-weight: 800; }
+.achieve-label { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+
+/* Resources */
+.resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.resource-card {
+  background: var(--bg-card); border-radius: 20px; padding: 28px;
+  border: 1px solid var(--border); box-shadow: var(--shadow); text-align: center;
+}
+.resource-icon {
+  width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center; font-size: 28px;
+}
+.resource-card h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.resource-card p { font-size: 13px; color: var(--text-soft); margin-bottom: 16px; }
+.btn-resource {
+  border-radius: 12px; padding: 8px 20px; font-weight: 600; font-size: 13px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; background: transparent;
+}
+
+/* CTA */
+.cta-box {
+  max-width: 800px; margin: 0 auto; text-align: center;
+  background: linear-gradient(135deg, rgba(0,185,179,0.05), rgba(255,122,90,0.03));
+  border-radius: 28px; padding: clamp(40px, 6vw, 64px);
+  border: 1px solid rgba(0,185,179,0.12); position: relative; overflow: hidden;
+}
+.cta-orb {
+  position: absolute; top: -50px; right: -50px; width: 200px; height: 200px;
+  border-radius: 50%; background: rgba(0,185,179,0.05); pointer-events: none;
+}
+.cta-box h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; }
+.cta-box p { font-size: 16px; color: var(--text-soft); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.btn-cta-accent {
+  background: linear-gradient(135deg, var(--accent), #FF5A3A);
+  color: #fff; border: none; border-radius: 30px; padding: 16px 36px;
+  font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+.btn-cta-outline {
+  background: var(--bg-card); color: var(--text); border: 2px solid var(--border);
+  border-radius: 30px; padding: 16px 28px; font-weight: 600; font-size: 15px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+
+/* Footer */
+footer {
+  padding: 60px 24px 30px; background: var(--footer-bg); color: #fff;
+}
+.footer-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px;
+}
+.footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.footer-logo {
+  width: 44px; height: 44px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 800; font-family: 'Sora', sans-serif;
+}
+.footer-title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 18px; }
+.footer-subtitle { font-size: 11px; opacity: 0.6; letter-spacing: 1px; }
+.footer-desc { font-size: 14px; opacity: 0.7; line-height: 1.7; max-width: 300px; }
+.footer-socials { display: flex; gap: 12px; margin-top: 16px; }
+.footer-social {
+  padding: 8px 14px; border-radius: 10px; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1); color: #fff; text-decoration: none;
+  font-size: 12px; font-weight: 500; transition: all 0.3s;
+}
+.footer-social:hover { background: rgba(255,255,255,0.15); }
+.footer-col h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 16px; opacity: 0.9; }
+.footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.3s; }
+.footer-col a:hover { color: rgba(255,255,255,0.9); }
+.footer-contact { font-size: 14px; line-height: 2; opacity: 0.7; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto;
+  font-size: 13px; opacity: 0.5;
+}
+
+/* WhatsApp Floating Button */
+.wa-float {
+  position: fixed; bottom: 24px; right: 24px; z-index: 900;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.wa-nudge {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 28px; padding: 8px 18px 8px 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  animation: nudgeFadeIn 0.8s ease both, nudgeBreathe 3s ease-in-out infinite 1s;
+  pointer-events: none; white-space: nowrap;
+}
+.wa-nudge-text {
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--primary); letter-spacing: 0.2px;
+}
+.wa-nudge-arrow {
+  display: inline-block; font-size: 14px; color: var(--primary);
+  animation: arrowBounce 1.4s ease-in-out infinite;
+}
+.wa-btn {
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--primary), #009E98);
+  border-radius: 50px; padding: 14px 24px 14px 18px;
+  text-decoration: none; color: #fff;
+  box-shadow: 0 6px 28px rgba(0,185,179,0.25);
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer; border: none;
+}
+.wa-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 36px rgba(0,185,179,0.35);
+}
+.wa-btn:active { transform: translateY(-1px) scale(0.98); }
+.wa-btn-icon {
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.wa-btn-icon svg { width: 24px; height: 24px; fill: #fff; }
+.wa-btn-label {
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+  letter-spacing: 0.3px; line-height: 1;
+}
+.wa-btn-sub {
+  font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+  opacity: 0.8; letter-spacing: 0.4px; line-height: 1; margin-top: 3px;
+}
+/* Ripple ring */
+.wa-btn::before {
+  content: ''; position: absolute; inset: -4px; border-radius: 50px;
+  border: 2px solid var(--primary); opacity: 0;
+  animation: waRipple 3s ease-out infinite 2s;
+  pointer-events: none;
+}
+.wa-btn { position: relative; overflow: visible; }
+
+@keyframes nudgeFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nudgeBreathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(4px); }
+  60% { transform: translateY(2px); }
+}
+@keyframes waRipple {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.15); }
+}
+
+[data-theme="dark"] .wa-btn {
+  background: linear-gradient(135deg, #00D4CC, #009E98);
+  box-shadow: 0 6px 28px rgba(0,212,204,0.2);
+}
+[data-theme="dark"] .wa-btn:hover {
+  box-shadow: 0 10px 36px rgba(0,212,204,0.3);
+}
+
+@media (max-width: 768px) {
+  .wa-float { bottom: 16px; right: 16px; }
+  .wa-btn { padding: 12px 20px 12px 14px; }
+  .wa-btn-label { font-size: 14px; }
+  .wa-nudge { padding: 6px 14px 6px 10px; }
+  .wa-nudge-text { font-size: 12px; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .features-grid, .courses-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .hero-grid { flex-direction: column; text-align: center; }
+  .hero-text h1 { font-size: 2rem; }
+  .hero-text p { margin-left: auto; margin-right: auto; }
+  .hero-btns { justify-content: center; }
+  .stats-row { justify-content: center; flex-wrap: wrap; gap: 20px; }
+  .hero-visual { order: -1; }
+  .hero-card { max-width: 320px; }
+  .features-grid, .courses-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .desktop-nav { display: none; }
+  .hamburger { display: flex; }
+  .achieve-grid { gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">M</div>
+    <div>
+      <div class="nav-title">Mission Success</div>
+      <div class="nav-subtitle">Coaching Institute</div>
+    </div>
+  </div>
+  <div class="desktop-nav">
+    <a class="nav-link" href="#home">Home</a>
+    <a class="nav-link" href="#courses">Courses</a>
+    <a class="nav-link" href="#results">Results</a>
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#contact">Contact</a>
+    <button class="btn-theme" id="themeToggle" onclick="toggleTheme()">🌙 Dark</button>
+    <button class="btn-primary">Join Now</button>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home" onclick="toggleMenu()">Home</a>
+  <a href="#courses" onclick="toggleMenu()">Courses</a>
+  <a href="#results" onclick="toggleMenu()">Results</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <div style="display:flex;gap:12px;margin-top:8px">
+    <button class="btn-theme" style="flex:1;justify-content:center" onclick="toggleTheme()">🌙 Dark</button>
+    <button class="btn-primary" style="flex:1;border-radius:12px;padding:12px">Join Now</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-shape1"></div>
+  <div class="hero-shape2"></div>
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Admissions Open — 2026 Batches
+      </div>
+      <h1>Turn Your Dream<br>Government Job<br><span>Into Reality</span></h1>
+      <p>Expert coaching in Balasore for SSC, Railway, Banking, OSSC & more. Join 5000+ successful students who started their journey right here.</p>
+      <div class="hero-btns">
+        <button class="btn-hero btn-glow">🚀 Join Now — Free Demo Class</button>
+        <a href="tel:9778354820" class="btn-hero-outline" style="text-decoration:none">📞 Call: 9778354820</a>
+      </div>
+      <div class="stats-row">
+        <div>
+          <div class="stat-num" data-count="5000" data-suffix="+">0+</div>
+          <div class="stat-label">Students Selected</div>
+        </div>
+        <div>
+          <div class="stat-num" data-count="7" data-suffix="+">0+</div>
+          <div class="stat-label">Years of Trust</div>
+        </div>
+        <div>
+          <div class="stat-num" data-count="50" data-suffix="+">0+</div>
+          <div class="stat-label">Expert Faculty</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-inner">
+          <div class="hero-card-icon">🎯</div>
+          <div class="hero-card-title">Your Success Starts Here</div>
+          <div class="hero-card-sub">Balasore's most trusted coaching institute since 2017</div>
+          <div class="hero-tags">
+            <span class="hero-tag">SSC</span>
+            <span class="hero-tag">Railway</span>
+            <span class="hero-tag">Banking</span>
+            <span class="hero-tag">OSSC</span>
+            <span class="hero-tag">JT</span>
+          </div>
+        </div>
+        <div class="hero-float hero-float-1"><span style="font-size:18px">🏆</span> Rank Holders</div>
+        <div class="hero-float hero-float-2"><span style="font-size:18px">📊</span> Mock Tests</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="trust-bar">
+  <div class="trust-track" id="trustTrack"></div>
+</section>
+
+<!-- MOTIVATIONAL QUOTE -->
+<section class="motivation">
+  <div class="motivation-card">
+    <div class="motivation-label">✨ Today's Motivation</div>
+    <div class="motivation-text" id="quoteText"></div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label" style="color:var(--primary)">Why Students Love Us</div>
+      <h2 class="section-title">Everything You Need to <span style="color:var(--primary)">Succeed</span></h2>
+    </div>
+    <div class="features-grid reveal" id="featuresGrid"></div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="section section-alt" id="courses">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label" style="color:var(--accent)">Popular Batches</div>
+      <h2 class="section-title">Choose Your <span style="color:var(--accent)">Path to Success</span></h2>
+    </div>
+    <div class="courses-grid reveal" id="coursesGrid"></div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section class="section" id="results">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label" style="color:var(--primary)">Student Success Stories</div>
+      <h2 class="section-title">Real Students. <span style="color:var(--primary)">Real Results.</span></h2>
+    </div>
+    <div class="testimonial-main reveal" id="testimonialMain">
+      <div class="testimonial-bar"></div>
+      <div style="font-size:40px;margin-bottom:12px">💬</div>
+      <p class="testimonial-quote" id="testimonialQuote"></p>
+      <div class="testimonial-name" id="testimonialName"></div>
+      <div class="testimonial-meta" id="testimonialMeta"></div>
+      <div class="dots" id="testimonialDots"></div>
+    </div>
+    <div class="toppers-grid" id="toppersGrid"></div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="achieve-section">
+  <div style="max-width:1000px;margin:0 auto">
+    <h2>Our Journey of Excellence Since 2017</h2>
+    <div class="achieve-grid reveal" id="achieveGrid"></div>
+  </div>
+</section>
+
+<!-- FREE RESOURCES -->
+<section class="section section-alt">
+  <div class="section-inner" style="max-width:900px">
+    <div class="section-header">
+      <div class="section-label" style="color:var(--accent)">Free Resources</div>
+      <h2 class="section-title">Study Materials & Practice Tests</h2>
+    </div>
+    <p style="text-align:center;font-size:16px;color:var(--text-soft);margin:-40px auto 40px;max-width:600px;line-height:1.7">
+      Start preparing right away with our curated free resources — PDFs, previous year papers, and daily quizzes.
+    </p>
+    <div class="resources-grid reveal" id="resourcesGrid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="cta-box reveal">
+    <div class="cta-orb"></div>
+    <div style="font-size:48px;margin-bottom:16px">🎯</div>
+    <h2>Ready to Begin Your Journey?</h2>
+    <p>Book a free demo class today and discover why thousands of students trust Mission Success.</p>
+    <div class="cta-btns">
+      <button class="btn-cta-accent btn-glow">🎓 Enroll Now</button>
+      <a href="https://wa.me/919778354820?text=I%20want%20to%20join%20Mission%20Success" target="_blank" rel="noopener" class="btn-cta-outline" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <div class="footer-logo">M</div>
+        <div>
+          <div class="footer-title">Mission Success</div>
+          <div class="footer-subtitle">COACHING INSTITUTE</div>
+        </div>
+      </div>
+      <p class="footer-desc">Empowering students in Balasore to achieve their dream government jobs through expert coaching since 2017.</p>
+      <div class="footer-socials">
+        <a href="https://instagram.com/missionsuccessofficial" target="_blank" class="footer-social">Instagram</a>
+        <a href="#" class="footer-social">Facebook</a>
+        <a href="#" class="footer-social">YouTube</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a><a href="#courses">Courses</a><a href="#results">Results</a>
+      <a href="#">Study Material</a><a href="#about">About Us</a><a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Exams</h4>
+      <a href="#">SSC CGL/CHSL</a><a href="#">Railway NTPC</a><a href="#">Banking IBPS</a>
+      <a href="#">OSSC/OSSSC</a><a href="#">Junior Teacher</a><a href="#">TET/CTET</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="footer-contact">
+        <div>📍 Azimabad, Near Sarpmind College</div>
+        <div style="padding-left:24px">Mallikashpur, Balasore – 756001</div>
+        <div>📞 9778354820 / 9124552688</div>
+        <div>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85e8ecf6f6eceaebf6f0e6e6e0f6f6abe7e9f6f7c5e2e8e4ece9abe6eae8">[email&#160;protected]</a></div>
+        <div>🕐 Mon–Sat: 6AM – 9PM</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2017–2026 Mission Success Coaching Institute, Balasore. All rights reserved.</div>
+    <div>@missionsuccessofficial</div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<div class="wa-float">
+  <div class="wa-nudge">
+    <span class="wa-nudge-text">Join Now</span>
+    <span class="wa-nudge-arrow">↓</span>
+  </div>
+  <a href="https://wa.me/919778354820?text=I%20want%20to%20join%20Mission%20Success" target="_blank" rel="noopener" class="wa-btn" title="Chat on WhatsApp">
+    <span class="wa-btn-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </span>
+    <div>
+      <div class="wa-btn-label">WhatsApp</div>
+      <div class="wa-btn-sub">Chat with us instantly</div>
+    </div>
+  </a>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// === DATA ===
+const COURSES = [
+  { name:"SSC CGL / CHSL", batch:"Morning Batch", time:"6:00 AM – 9:00 AM", fees:"₹4,500/month", seats:12, icon:"🏛️", color:"#0288D1" },
+  { name:"Railway Group D / NTPC", batch:"Day Batch", time:"10:00 AM – 1:00 PM", fees:"₹3,800/month", seats:8, icon:"🚂", color:"#00B9B3" },
+  { name:"Banking (IBPS/SBI)", batch:"Afternoon Batch", time:"2:00 PM – 5:00 PM", fees:"₹5,000/month", seats:15, icon:"🏦", color:"#FF7A5A" },
+  { name:"OSSC / OSSSC", batch:"Evening Batch", time:"5:30 PM – 8:30 PM", fees:"₹4,000/month", seats:5, icon:"📋", color:"#81DACA" },
+  { name:"Junior Teacher (JT)", batch:"Weekend Special", time:"Sat-Sun Full Day", fees:"₹3,500/month", seats:20, icon:"📚", color:"#FFCB6B" },
+  { name:"TET / CTET", batch:"Online + Offline", time:"Flexible", fees:"₹3,000/month", seats:30, icon:"🎓", color:"#A8E6CF" }
+];
+const FEATURES = [
+  { icon:"👨‍🏫", title:"Expert Faculty", desc:"Experienced teachers with proven track records in competitive exam coaching" },
+  { icon:"📝", title:"Weekly Mock Tests", desc:"Regular practice tests with detailed analysis & performance tracking" },
+  { icon:"🎥", title:"Recorded Lectures", desc:"Missed a class? Revise anytime with our complete recorded lecture library" },
+  { icon:"💡", title:"Doubt Clearing", desc:"Personalized 1-on-1 doubt sessions until every concept is crystal clear" },
+  { icon:"💰", title:"Affordable Fees", desc:"Quality education at fees that respect every family's budget" },
+  { icon:"🏆", title:"Proven Results", desc:"5000+ students selected in various government exams since 2017" }
+];
+const TOPPERS = [
+  { name:"Subhashree Panda", exam:"OSSC – ASI", rank:"Rank 12", year:"2024", quote:"Mission Success transformed my preparation completely!" },
+  { name:"Rakesh Kumar Sahoo", exam:"Railway NTPC", rank:"Selected", year:"2023", quote:"The mock tests here are exactly like the real exam." },
+  { name:"Priyanka Mohanty", exam:"SSC CGL", rank:"Rank 45", year:"2024", quote:"Best coaching in Balasore, no doubt about it." },
+  { name:"Bikash Ranjan Das", exam:"Banking IBPS PO", rank:"Selected", year:"2023", quote:"Faculty support was incredible throughout my journey." },
+  { name:"Sushree Sangita", exam:"Junior Teacher", rank:"Rank 8", year:"2024", quote:"From zero confidence to government job — thank you MS!" },
+  { name:"Amit Kumar Behera", exam:"Food SI", rank:"Selected", year:"2023", quote:"Marathon sessions before exams were game changers." }
+];
+const QUOTES = [
+  "सपने वो नहीं जो नींद में आए, सपने वो हैं जो नींद ना आने दे।",
+  "कठिन परिश्रम का कोई विकल्प नहीं है।",
+  "आज का त्याग, कल की सफलता है।",
+  "हार मत मानो, सरकारी नौकरी तुम्हारी है!",
+  "एक और प्रयास, बस एक और प्रयास।"
+];
+const ACHIEVEMENTS = [
+  { num:5000, suf:"+", label:"Students Selected", icon:"🎉" },
+  { num:150, suf:"+", label:"Rank Holders", icon:"🏆" },
+  { num:25, suf:"+", label:"Exam Categories", icon:"📋" },
+  { num:7, suf:"+", label:"Years of Trust", icon:"💎" }
+];
+const RESOURCES = [
+  { icon:"📄", title:"Study PDFs", desc:"Topic-wise notes for all exams", color:"var(--primary)" },
+  { icon:"📝", title:"Previous Year Papers", desc:"10+ years solved papers", color:"var(--secondary)" },
+  { icon:"⚡", title:"Daily Quiz", desc:"Test yourself every day", color:"var(--accent)" }
+];
+const TRUST_EXAMS = ["SSC","Railway RRB","IBPS Banking","OSSC","OSSSC","Junior Teacher","TET/CTET","Food SI","MTS","Group C/D","PSC","GNM/ANM"];
+
+// === STATE ===
+let currentTestimonial = 0;
+let quoteIdx = 0;
+let isDark = false;
+
+// === THEME ===
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
+  document.getElementById('themeToggle').innerHTML = isDark ? '☀️ Light' : '🌙 Dark';
+}
+
+// === MOBILE NAV ===
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav');
+  nav.classList.toggle('open');
+}
+
+// === BUILD TRUST BAR ===
+function buildTrustBar() {
+  const track = document.getElementById('trustTrack');
+  let html = '';
+  for (let r = 0; r < 2; r++) {
+    TRUST_EXAMS.forEach(e => { html += `<span class="trust-item">✅ ${e}</span>`; });
+  }
+  track.innerHTML = html;
+}
+
+// === BUILD FEATURES ===
+function buildFeatures() {
+  const grid = document.getElementById('featuresGrid');
+  grid.innerHTML = FEATURES.map((f, i) => `
+    <div class="feature-card card-hover" style="animation-delay:${i*80}ms">
+      <div class="feature-icon">${f.icon}</div>
+      <h3>${f.title}</h3>
+      <p>${f.desc}</p>
+    </div>
+  `).join('');
+}
+
+// === BUILD COURSES ===
+function buildCourses() {
+  const grid = document.getElementById('coursesGrid');
+  grid.innerHTML = COURSES.map(c => {
+    const fill = Math.max(60, 95 - c.seats * 3);
+    return `
+    <div class="course-card card-hover">
+      <div class="course-bar" style="background:linear-gradient(90deg,${c.color},${c.color}88)"></div>
+      <div class="course-body">
+        <div class="course-header">
+          <div>
+            <span class="course-icon">${c.icon}</span>
+            <div class="course-name">${c.name}</div>
+          </div>
+          <span class="course-seats" style="background:${c.color}18;color:${c.color}">${c.seats} seats left</span>
+        </div>
+        <div class="course-info">
+          <div class="course-time"><span>🕐</span> ${c.batch} — ${c.time}</div>
+          <div class="course-fees"><span>💰</span> ${c.fees}</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-labels"><span>Filling Fast</span><span>${fill}% Full</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:${fill}%;background:linear-gradient(90deg,${c.color},${c.color}CC)"></div></div>
+        </div>
+        <button class="btn-enroll" style="background:linear-gradient(135deg,${c.color},${c.color}CC)">Enroll Now →</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// === BUILD TESTIMONIALS ===
+function buildToppers() {
+  const grid = document.getElementById('toppersGrid');
+  grid.innerHTML = TOPPERS.map((tp, i) => `
+    <div class="topper-card card-hover ${i===0?'active':''}" data-index="${i}" onclick="setTestimonial(${i})">
+      <div class="topper-avatar">${tp.name.charAt(0)}</div>
+      <div class="topper-name">${tp.name.split(' ')[0]}</div>
+      <div class="topper-exam">${tp.exam}</div>
+      <div class="topper-rank">${tp.rank}</div>
+    </div>
+  `).join('');
+
+  const dots = document.getElementById('testimonialDots');
+  dots.innerHTML = TOPPERS.map((_, i) => `<button class="dot-btn ${i===0?'active':''}" style="width:${i===0?28:10}px" onclick="setTestimonial(${i})"></button>`).join('');
+
+  updateTestimonial();
+}
+
+function updateTestimonial() {
+  const tp = TOPPERS[currentTestimonial];
+  document.getElementById('testimonialQuote').textContent = `"${tp.quote}"`;
+  document.getElementById('testimonialName').textContent = tp.name;
+  document.getElementById('testimonialMeta').textContent = `${tp.exam} • ${tp.rank} • ${tp.year}`;
+
+  document.querySelectorAll('.topper-card').forEach((c, i) => {
+    c.classList.toggle('active', i === currentTestimonial);
+  });
+  document.querySelectorAll('.dot-btn').forEach((d, i) => {
+    d.classList.toggle('active', i === currentTestimonial);
+    d.style.width = i === currentTestimonial ? '28px' : '10px';
+  });
+}
+
+function setTestimonial(idx) {
+  currentTestimonial = idx;
+  updateTestimonial();
+}
+
+// === BUILD ACHIEVEMENTS ===
+function buildAchievements() {
+  const grid = document.getElementById('achieveGrid');
+  grid.innerHTML = ACHIEVEMENTS.map((a, i) => `
+    <div class="achieve-item" style="transition-delay:${i*150}ms">
+      <div class="achieve-icon">${a.icon}</div>
+      <div class="achieve-num" data-count="${a.num}" data-suffix="${a.suf}">0${a.suf}</div>
+      <div class="achieve-label">${a.label}</div>
+    </div>
+  `).join('');
+}
+
+// === BUILD RESOURCES ===
+function buildResources() {
+  const grid = document.getElementById('resourcesGrid');
+  grid.innerHTML = RESOURCES.map(r => `
+    <div class="resource-card card-hover">
+      <div class="resource-icon" style="background:${r.color}12">${r.icon}</div>
+      <h3>${r.title}</h3>
+      <p>${r.desc}</p>
+      <button class="btn-resource" style="color:${r.color};border:1px solid ${r.color}30;background:${r.color}08">Access Free →</button>
+    </div>
+  `).join('');
+}
+
+// === QUOTE ROTATION ===
+function rotateQuote() {
+  const el = document.getElementById('quoteText');
+  el.style.opacity = 0;
+  setTimeout(() => {
+    el.textContent = `"${QUOTES[quoteIdx]}"`;
+    el.style.opacity = 1;
+    quoteIdx = (quoteIdx + 1) % QUOTES.length;
+  }, 500);
+}
+
+// === COUNTER ANIMATION ===
+function animateCounters(container) {
+  const nums = container.querySelectorAll('[data-count]');
+  nums.forEach(el => {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const end = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const step = Math.max(1, Math.floor(end / 80));
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= end) { current = end; clearInterval(timer); }
+      el.textContent = current.toLocaleString() + suffix;
+    }, 20);
+  });
+}
+
+// === SCROLL REVEAL ===
+function initObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        animateCounters(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Also observe stat-num in hero
+  const heroStats = document.querySelector('.stats-row');
+  if (heroStats) {
+    const heroObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCounters(e.target); heroObs.disconnect(); } });
+    }, { threshold: 0.3 });
+    heroObs.observe(heroStats);
+  }
+}
+
+// === INIT ===
+document.addEventListener('DOMContentLoaded', () => {
+  buildTrustBar();
+  buildFeatures();
+  buildCourses();
+  buildToppers();
+  buildAchievements();
+  buil
